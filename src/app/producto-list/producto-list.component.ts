@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Product } from '../product';
 import { ProductoService } from '../producto.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-producto-list',
@@ -9,7 +10,9 @@ import { ProductoService } from '../producto.service';
 export class ProductoListComponent {
   productos: Product[];
 
-  constructor(private productoService: ProductoService) {
+  constructor(private productoService: ProductoService,
+    private router: Router
+    ) {
 
   }
 
@@ -18,6 +21,10 @@ export class ProductoListComponent {
     // cargamos los productos
     this.obtenerProductos()
 
+  }
+
+  editarProductor(id: number) {
+    this.router.navigate(['editar-producto', id]);
   }
 
   private obtenerProductos() {
@@ -29,6 +36,21 @@ export class ProductoListComponent {
         console.log(error);
       }
     );
+
+  }
+
+  eliminarProducto(id: number) {
+    this.productoService.eliminarProducto(id).subscribe(
+      {
+        next: (response) => {
+          this.obtenerProductos();
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      }
+    )
+
 
   }
 

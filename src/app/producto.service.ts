@@ -18,4 +18,16 @@ export class ProductoService {
   agregarPrducto(product: Product): Observable<Object> {
     return this.http.post(this.urlBAse, product);
   }
+
+  obtenerProductoPorId(id: Number) {
+    return this.http.get<Product>(`${this.urlBAse}/${id}`);
+  }
+
+  editarProducto(id: number, producto: Product): Observable<Object> {
+    return this.http.put(`${this.urlBAse}/${id}`, producto);
+
+  }
+  eliminarProducto(id: number): Observable<Object> {
+    return this.http.delete(`${this.urlBAse}/${id}`);
+  }
 }
